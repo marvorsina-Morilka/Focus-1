@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Focus 1 Unit 5 Revision – Interactive Lesson</title>
+<style>
+  :root {
+    --green: #2E7D32;
+    --green-light: #4CAF50;
+    --green-dark: #1B5E20;
+    --orange: #FF9800;
+    --orange-light: #FFB74D;
+    --orange-dark: #F57C00;
+    --bg: #F5F7FA;
+    --card: #FFFFFF;
+    --text: #212121;
+    --text-light: #616161;
+    --border: #E0E0E0;
+    --success: #43A047;
+    --error: #E53935;
+    --hint: #FB8C00;
+    --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    font-size: 18px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 12px 16px 80px;
+  }
+  header {
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    color: white;
+    padding: 20px 16px;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  header .meta {
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+  .progress-bar {
+    background: rgba(255,255,255,0.25);
+    border-radius: 20px;
+    height: 10px;
+    margin-top: 14px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    background: var(--orange);
+    height: 100%;
+    width: 0%;
+    border-radius: 20px;
+    transition: width 0.4s ease;
+  }
+  .stage-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+  .stage-btn {
+    background: white;
+    border: 2px solid var(--border);
+    color: var(--text-light);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .stage-btn.active {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+  .stage-btn.done {
+    background: var(--green-light);
+    border-color: var(--green-light);
+    color: white;
+  }
+  .stage {
+    display: none;
+    animation: fadeIn 0.35s ease;
+  }
+  .stage.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 22px 20px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .card h2 {
+    color: var(--green-dark);
+    font-size: 1.35rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card .time {
+    font-size: 0.85rem;
+    color: var(--orange-dark);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .card .aim {
+    background: #E8F5E9;
+    border-left: 4px solid var(--green);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+  }
+  .ua {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .vocab-card {
+    background: #FFF8E1;
+    border: 2px solid var(--orange-light);
+    border-radius: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .vocab-card:hover { transform: scale(1.02); }
+  .vocab-card .word {
+    font-weight: 700;
+    color: var(--orange-dark);
+    font-size: 1.1rem;
+  }
+  .vocab-card .def {
+    font-size: 0.9rem;
+    margin-top: 4px;
+    color: var(--text);
+  }
+  .exercise {
+    margin: 18px 0;
+    padding: 16px;
+    background: #FAFAFA;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  .exercise h3 {
+    color: var(--green);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  .q-item {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .q-item:last-child { border-bottom: none; }
+  .q-text {
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  input[type="text"], select {
+    font-size: 1rem;
+    padding: 10px 12px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 320px;
+    margin: 4px 0;
+  }
+  input[type="text"]:focus, select:focus {
+    outline: none;
+    border-color: var(--green);
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .option-btn {
+    background: white;
+    border: 2px solid var(--border);
+    padding: 12px 16px;
+    border-radius: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--green-light);
+    background: #E8F5E9;
+  }
+  .option-btn.selected {
+    border-color: var(--green);
+    background: #C8E6C9;
+  }
+  .option-btn.correct {
+    border-color: var(--success);
+    background: #C8E6C9;
+  }
+  .option-btn.wrong {
+    border-color: var(--error);
+    background: #FFCDD2;
+  }
+  .option-btn:disabled { cursor: default; opacity: 0.85; }
+  .check-btn, .hint-btn, .show-btn, .next-btn, .restart-btn {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 8px 6px 8px 0;
+    transition: background 0.2s;
+  }
+  .check-btn:hover, .next-btn:hover { background: var(--green-dark); }
+  .hint-btn { background: var(--orange); }
+  .hint-btn:hover { background: var(--orange-dark); }
+  .show-btn { background: #5C6BC0; }
+  .show-btn:hover { background: #3F51B5; }
+  .restart-btn {
+    background: var(--orange-dark);
+    display: block;
+    margin: 20px auto;
+    max-width: 240px;
+  }
+  .feedback {
+    margin-top: 8px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .feedback.ok {
+    background: #E8F5E9;
+    color: var(--success);
+    display: block;
+  }
+  .feedback.err {
+    background: #FFEBEE;
+    color: var(--error);
+    display: block;
+  }
+  .feedback.hint {
+    background: #FFF3E0;
+    color: var(--hint);
+    display: block;
+  }
+  .match-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 12px 0;
+    min-height: 50px;
+  }
+  .match-item {
+    background: white;
+    border: 2px solid var(--green-light);
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+  }
+  .match-item.dragging { opacity: 0.5; }
+  .drop-zone {
+    border: 2px dashed var(--orange);
+    border-radius: 10px;
+    padding: 12px;
+    min-height: 48px;
+    background: #FFF8E1;
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .drop-zone.over { background: #FFE0B2; }
+  .drop-label {
+    font-weight: 600;
+    min-width: 140px;
+  }
+  .tf-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .tf-btn {
+    flex: 1;
+    max-width: 120px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .tf-btn.true-selected { background: #C8E6C9; border-color: var(--success); }
+  .tf-btn.false-selected { background: #FFCDD2; border-color: var(--error); }
+  .speaking-card {
+    background: linear-gradient(135deg, #E8F5E9, #FFF3E0);
+    border: 2px solid var(--green);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 12px 0;
+  }
+  .speaking-card h4 {
+    color: var(--green-dark);
+    margin-bottom: 10px;
+  }
+  .role-box {
+    background: white;
+    border-radius: 10px;
+    padding: 14px;
+    margin: 10px 0;
+    border-left: 5px solid var(--orange);
+  }
+  .timer {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 8px;
+  }
+  .nav-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    gap: 12px;
+  }
+  .nav-footer button {
+    flex: 1;
+    max-width: 180px;
+  }
+  .summary-list {
+    list-style: none;
+    padding: 0;
+  }
+  .summary-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .score-box {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--green);
+    margin: 16px 0;
+  }
+  .hidden { display: none !important; }
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    header h1 { font-size: 1.3rem; }
+    .card { padding: 16px 14px; }
+    .stage-btn { padding: 6px 10px; font-size: 0.8rem; }
+    .options { gap: 6px; }
+    .option-btn { padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Focus 1 • Unit 5 Revision</h1>
+    <div class="meta">A2 • Age 12 • 60 min • Individual • CELTA-framed</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </header>
+
+  <nav class="stage-nav" id="stageNav"></nav>
+
+  <main id="mainContent"></main>
+
+  <button class="restart-btn" onclick="restartLesson()">🔄 Почати заново / Start again</button>
+</div>
+
+<script>
+/* ============================================================
+   LESSON DATA – edit content here only
+   ============================================================ */
+const LESSON = {
+  title: "Focus 1 Unit 5 Revision",
+  level: "A2",
+  duration: 60,
+  stages: [
+    {
+      id: "leadin",
+      title: "1. Lead-in",
+      time: "5 min",
+      aim: "Activate schema about school life and personalise the topic. (Активувати знання про школу)",
+      content: "leadin"
+    },
+    {
+      id: "vocab",
+      title: "2. Vocabulary",
+      time: "10 min",
+      aim: "Present and practise 20 key words from Unit 5. (20 нових слів + практика)",
+      content: "vocab"
+    },
+    {
+      id: "grammar",
+      title: "3. Grammar",
+      time: "12 min",
+      aim: "Review modals of obligation/advice and Past Simple of be/can. (Модальні дієслова + Past Simple)",
+      content: "grammar"
+    },
+    {
+      id: "useeng",
+      title: "4. Use of English",
+      time: "8 min",
+      aim: "Practise collocations and functional language in dialogues. (Лексика в контексті)",
+      content: "useeng"
+    },
+    {
+      id: "reading",
+      title: "5. Reading",
+      time: "10 min",
+      aim: "Read for specific information and discuss Green School. (Читання + говоріння)",
+      content: "reading"
+    },
+    {
+      id: "speaking",
+      title: "6. Speaking",
+      time: "10 min",
+      aim: "Role-play at the Clothes Museum + free speaking. (Рольова гра + вільне говоріння)",
+      content: "speaking"
+    },
+    {
+      id: "summary",
+      title: "7. Summary",
+      time: "5 min",
+      aim: "Review key language and reflect on progress. (Підсумок і повторення)",
+      content: "summary"
+    }
+  ],
+
+  /* ---------- 20 KEY WORDS ---------- */
+  vocabulary: [
+    { word: "retake", def: "to do an exam or test again because you failed or want a better grade", ua: "перескласти (тест)" },
+    { word: "private school", def: "a school that parents pay for (not free from the government)", ua: "приватна школа" },
+    { word: "state school", def: "a school that is free and paid for by the government", ua: "державна школа" },
+    { word: "mixed school", def: "a school for both boys and girls", ua: "змішана школа" },
+    { word: "single-sex school", def: "a school for only boys or only girls", ua: "школа тільки для хлопців/дівчат" },
+    { word: "put up a tent", def: "to build / set up a tent for camping", ua: "поставити намет" },
+    { word: "History", def: "the subject about the past", ua: "історія (предмет)" },
+    { word: "must", def: "it is necessary / obligatory (strong rule)", ua: "повинен (правило)" },
+    { word: "shouldn't", def: "it is not a good idea (advice against)", ua: "не варто" },
+    { word: "mustn't", def: "it is forbidden / not allowed", ua: "не можна (заборонено)" },
+    { word: "doesn't have to", def: "it is not necessary", ua: "не обов'язково" },
+    { word: "nursery school", def: "school for very young children (3–5 years)", ua: "дитсадок / nursery" },
+    { word: "primary school", def: "school for children from about 5 to 11", ua: "початкова школа" },
+    { word: "sports field", def: "an outdoor area for playing football, etc.", ua: "спортивне поле" },
+    { word: "experiments", def: "scientific tests you do in a lab", ua: "експерименти" },
+    { word: "download", def: "to copy a file or app from the internet to your device", ua: "завантажити" },
+    { word: "miss (a class)", def: "to not go to a lesson", ua: "пропустити (урок)" },
+    { word: "opening times", def: "the hours when a place is open", ua: "години роботи" },
+    { word: "give a speech", def: "to speak in front of people", ua: "виголосити промову" },
+    { word: "revise", def: "to study again before a test", ua: "повторювати матеріал" }
+  ],
+
+  /* ---------- LEAD-IN ---------- */
+  leadin: {
+    questions: [
+      "What type of school do you go to? (state / private / mixed / single-sex)",
+      "What subjects do you enjoy most? Why?",
+      "Do you wear a uniform? Do you like it?",
+      "How much homework do you usually have?",
+      "What after-school activities do you do?"
+    ]
+  },
+
+  /* ---------- EXERCISES FROM BOOK ---------- */
+  /* Ex 1 – gap fill with word box */
+  ex1: {
+    title: "Vocabulary: Complete the sentences",
+    instruction: "Complete the sentences with the words in the box. There are two extra words. (Заповни пропуски. Два слова зайві)",
+    words: ["be", "book", "fail", "get", "have", "retake", "start"],
+    items: [
+      { q: "1. How old are you when you ______ school in England?", a: "start", hint: "When do children begin school?" },
+      { q: "2. Let's ______ a meeting to organise the party.", a: "have", hint: "We often say 'have a meeting'." },
+      { q: "3. I want to ______ my English test, because I'm not happy with my grade.", a: "retake", hint: "Do the test again." },
+      { q: "4. The ______ tickets cost £10. You can ______ online before you go to the museum.", a: ["book", "book"], hint: "Reserve tickets in advance. Same word twice!" },
+      { q: "5. The test starts at seven o'clock and I want to ______ on time.", a: "be", hint: "Arrive / be present at the right time." }
+    ]
+  },
+
+  /* Ex 2 – choose correct option */
+  ex2: {
+    title: "Vocabulary: Choose the correct option",
+    instruction: "Choose the correct option. (Обери правильний варіант)",
+    items: [
+      { q: "1. My parents pay for me to go to a ______ school.", options: ["state", "private"], a: "private", hint: "Parents pay → not free." },
+      { q: "2. Pierre has to ______ his language skills before his summer camp in Oxford.", options: ["improve", "make"], a: "improve", hint: "Make better." },
+      { q: "3. It's a ______ school and only girls learn here.", options: ["single-sex", "mixed"], a: "single-sex", hint: "Only one gender." },
+      { q: "4. At the summer camp children learn how to ______ a tent.", options: ["move around", "put up"], a: "put up", hint: "Build / set up the tent." },
+      { q: "5. Pupils usually ______ school when they are five years old.", options: ["start", "leave"], a: "start", hint: "Begin school." },
+      { q: "6. I like learning about the past, so I enjoy ______.", options: ["Maths", "History"], a: "History", hint: "Subject about the past." }
+    ]
+  },
+
+  /* Ex 3 – modals transformation */
+  ex3: {
+    title: "Grammar: Modals – rewrite the sentences",
+    instruction: "Complete the second sentence so that it has a similar meaning. Use the verbs in the box. (Перефразуй, використовуючи модальні)",
+    words: ["doesn't have to", "shouldn't", "mustn't", "must", "should"],
+    items: [
+      { q: "1. It's not necessary for Joanne to help me.<br>Joanne ______ help me.", a: "doesn't have to", hint: "Not necessary = doesn't have to" },
+      { q: "2. My advice is to talk to your parents about your problem.<br>I think you ______ talk to your parents about your problem.", a: "should", hint: "Advice = should" },
+      { q: "3. The school rules say: 'No mobile phones in class.'<br>You ______ use mobile phones in class.", a: "mustn't", hint: "Forbidden by rules = mustn't" },
+      { q: "4. I don't think it's a good idea to invite Jack to your party.<br>You ______ invite Jack to your party.", a: "shouldn't", hint: "Not a good idea = shouldn't" },
+      { q: "5. At our school, all the students wear a uniform. It's the rule.<br>At our school, you ______ wear a uniform.", a: "must", hint: "It's the rule = must" }
+    ]
+  },
+
+  /* Ex 4 – Past Simple be / can */
+  ex4: {
+    title: "Grammar: Past Simple of be / can",
+    instruction: "Complete the sentences with the Past Simple form of the verbs in brackets. (Минулий час be / can)",
+    items: [
+      { q: "1. I ______ (be) shy as a child, but now I'm not shy.", a: "was", hint: "I + be in the past → was" },
+      { q: "2. Simon ______ (not can) swim when he was four years old.", a: "couldn't", hint: "Negative past of can → couldn't" },
+      { q: "3. Where ______ (be) you yesterday?", a: "were", hint: "You + be → were" },
+      { q: "4. They ______ (can) sing very well when they were at school.", a: "could", hint: "Past of can → could" },
+      { q: "5. I ______ (not be) at school last week. It ______ (be) a holiday.", a: ["wasn't", "was"], hint: "I + not be → wasn't; it + be → was" },
+      { q: "6. ______ (can) you play the guitar when you ______ (be) at primary school?", a: ["Could", "were"], hint: "Question past can → Could; you + be → were" }
+    ]
+  },
+
+  /* Ex 5 – dialogues multiple choice */
+  ex5: {
+    title: "Use of English: Dialogues",
+    instruction: "Read the dialogues and choose the correct answer, A, B or C. (Обери правильну відповідь)",
+    items: [
+      {
+        q: "1. X: How long do you usually ______ for an exam?<br>Y: Very long – when it's Maths! I'm rubbish at numbers.",
+        options: ["A sit", "B revise", "C pass"],
+        a: "B revise",
+        hint: "Study again before a test = revise"
+      },
+      {
+        q: "2. X: …<br>Y: Really?! Do you still speak it?",
+        options: ["A I couldn't speak French when I was eight.", "B I could speak French when I was eight.", "C I could speak French, but I can't now."],
+        a: "B I could speak French when I was eight.",
+        hint: "Y is surprised they still speak it → they could speak it in the past and still can."
+      },
+      {
+        q: "3. X: How does your school get Science labs?<br>Y: Yes. We do a lot of ______ there.",
+        options: ["A overalls", "B equipment", "C experiments"],
+        a: "C experiments",
+        hint: "What do you do in a Science lab? Scientific tests."
+      },
+      {
+        q: "4. X: We're going to the Science Museum tomorrow.<br>Y: You should ______ the app before you go. It's great.",
+        options: ["A download", "B take", "C play"],
+        a: "A download",
+        hint: "Get the app onto your phone = download"
+      },
+      {
+        q: "5. X: Why are you running?<br>Y: It's almost nine o'clock and I don't want to ______ my Geography class!",
+        options: ["A miss", "B late", "C fail"],
+        a: "A miss",
+        hint: "Not go to the lesson = miss"
+      },
+      {
+        q: "6. X: What are your ______?<br>Y: From 9 a.m. to 6 p.m.",
+        options: ["A group discounts", "B guided tours", "C opening times"],
+        a: "C opening times",
+        hint: "Hours when the place is open."
+      }
+    ]
+  },
+
+  /* Ex 6 – more multiple choice */
+  ex6: {
+    title: "Use of English: Choose A, B or C",
+    instruction: "Choose the correct answer, A, B or C.",
+    items: [
+      { q: "1. Sarah is nervous because she's got to ______ a speech.", options: ["A do", "B give", "C have"], a: "B give", hint: "Collocation: give a speech" },
+      { q: "2. My cousin is three years old. She goes to ______ school every morning.", options: ["A nursery", "B high", "C primary"], a: "A nursery", hint: "Very young children → nursery" },
+      { q: "3. I hope I ______ the test.", options: ["A do badly", "B pass", "C get lost"], a: "B pass", hint: "Succeed in the test = pass" },
+      { q: "4. We play football on the sports ______.", options: ["A hall", "B gym", "C field"], a: "C field", hint: "Outdoor grass area = field" },
+      { q: "5. Matt ______ to go to school by bus.", options: ["A has", "B must", "C should"], a: "A has", hint: "Necessity from situation: has to" },
+      { q: "6. I ______ play the piano when I was six years old.", options: ["A can", "B could", "C should"], a: "B could", hint: "Past ability = could" }
+    ]
+  },
+
+  /* Listening adapted – short text + gaps */
+  listening: {
+    title: "Listening (adapted reading)",
+    instruction: "Read about Jack and complete the information with up to three words. (Прочитай і заповни пропуски)",
+    text: `Hi, my name's Jack. I'm thirteen years old and I go to a secondary school in Manchester. My sister is younger – she goes to a private school because my parents think it's better for her. At my school we have to wear a uniform: a blue jumper, grey trousers and black shoes. I usually have about two hours of homework every day – it's a lot! After school I like playing football with my friends on the sports field. At my school you can learn Spanish, French and Russian. I chose Spanish because I want to travel to Spain one day.`,
+    items: [
+      { q: "1. Jack is ______ years old.", a: "thirteen / 13", hint: "Look at the first sentence." },
+      { q: "2. Jack's sister goes to a ______ school.", a: "private", hint: "Parents pay for it." },
+      { q: "3. Jack usually wears a ______ to school.", a: "uniform", hint: "Blue jumper, grey trousers..." },
+      { q: "4. Jack has ______ hours of homework a day.", a: "two / 2", hint: "About how many hours?" },
+      { q: "5. Jack likes playing ______.", a: "football", hint: "On the sports field." },
+      { q: "6. At Jack's school you can learn Spanish, ______ and Russian.", a: "French", hint: "The middle language." }
+    ]
+  },
+
+  /* Reading Green School */
+  reading: {
+    title: "Reading: Green School",
+    instruction: "Read the text. Are the statements true or false? (Прочитай. True чи False?)",
+    text: `Green School in Bali is an unusual school. It was an experiment in 2015 by John and Cynthia Hardy. Everything in the school is 'green'. That means it's all good for the environment. The classrooms are made of bamboo. The light and power is from the sun. The school also uses water from the river to produce energy. The Hardys' experiment was successful and there are now 140 students from more than twenty-five countries and it goes from kindergarten to high school. The students at Green School don't only learn five subjects such as English and Maths. They also learn to grow organic vegetables and they look after the plants and learn to cook them. The school also keeps some farm animals. The students also study building and furniture and traditional art and dance. The Hardys want the local community to be a part of Green School. They have a rule that twenty percent of the students must be from Bali because they want local children to learn about protecting the environment. The children are often poor so people from all over the world pay for them to go to the school. The idea of green living is becoming more popular and now people are building eco-houses near the school so that children can walk to school. The Hardys' dream is that one day all the schools in the world will be green!`,
+    items: [
+      { q: "1. At Green School, there is nothing bad for the environment.", a: true, hint: "Everything is 'green' = good for the environment." },
+      { q: "2. All the school's energy comes from the sun.", a: false, hint: "They also use water from the river." },
+      { q: "3. The students at Green School are all teenagers.", a: false, hint: "It goes from kindergarten to high school." },
+      { q: "4. There aren't any rules about how many students must be from Bali.", a: false, hint: "20% must be from Bali." },
+      { q: "5. Some students have eco-houses near the school.", a: true, hint: "People are building eco-houses so children can walk to school." }
+    ]
+  },
+
+  /* Speaking tasks */
+  speaking: {
+    roleplay: {
+      title: "Clothes Museum – Role-play",
+      info: `Clothes Museum
+• Learn all about the history of fashion.
+• Special exhibition of 1920s clothes showing now!
+• Buy books and posters in our shop.
+Open Monday–Saturday, 9.00–6.00 (closed Sunday)
+Tickets: Adults £15, Students £8
+Special discount for groups!
+Book online to get an extra discount or phone 050 3456 7829.`,
+      studentA: [
+        "Greet the visitor and ask how you can help.",
+        "Answer questions about the museum using the information.",
+        "Offer to book tickets or give the phone number."
+      ],
+      studentB: [
+        "You want to visit with your class.",
+        "Ask: What can you see / learn? When is it open?",
+        "Ask about the shop.",
+        "Ask about ticket prices (especially for students / groups).",
+        "Ask how to book (online? phone?)."
+      ]
+    },
+    free: [
+      "Would you like to go to Green School? Why / Why not?",
+      "Describe your ideal school. What subjects, buildings, rules?",
+      "Talk about a school trip you enjoyed (or invent one).",
+      "What is better – uniform or no uniform? Why?"
+    ]
+  }
+};
+
+/* ============================================================
+   APP LOGIC
+   ============================================================ */
+let currentStage = 0;
+let stageScores = {};
+let attempts = {}; // key: exerciseId-itemIdx → count
+
+function $(sel) { return document.querySelector(sel); }
+function $all(sel) { return document.querySelectorAll(sel); }
+
+function init() {
+  renderNav();
+  showStage(0);
+}
+
+function renderNav() {
+  const nav = $("#stageNav");
+  nav.innerHTML = LESSON.stages.map((s, i) =>
+    `<button class="stage-btn" data-idx="${i}" onclick="showStage(${i})">${s.title}</button>`
+  ).join("");
+}
+
+function updateProgress() {
+  const pct = ((currentStage + 1) / LESSON.stages.length) * 100;
+  $("#progressFill").style.width = pct + "%";
+  $all(".stage-btn").forEach((btn, i) => {
+    btn.classList.remove("active", "done");
+    if (i === currentStage) btn.classList.add("active");
+    else if (i < currentStage) btn.classList.add("done");
+  });
+}
+
+function showStage(idx) {
+  currentStage = idx;
+  updateProgress();
+  const stage = LESSON.stages[idx];
+  const main = $("#mainContent");
+  let html = `<div class="stage active"><div class="card">
+    <h2>${stage.title}</h2>
+    <div class="time">⏱ ${stage.time}</div>
+    <div class="aim"><strong>Aim:</strong> ${stage.aim}</div>`;
+
+  switch (stage.content) {
+    case "leadin": html += renderLeadin(); break;
+    case "vocab": html += renderVocab(); break;
+    case "grammar": html += renderGrammar(); break;
+    case "useeng": html += renderUseEng(); break;
+    case "reading": html += renderReading(); break;
+    case "speaking": html += renderSpeaking(); break;
+    case "summary": html += renderSummary(); break;
+  }
+
+  html += `<div class="nav-footer">
+    ${idx > 0 ? `<button class="next-btn" onclick="showStage(${idx-1})">← Back</button>` : "<span></span>"}
+    ${idx < LESSON.stages.length-1 ? `<button class="next-btn" onclick="showStage(${idx+1})">Next →</button>` : ""}
+  </div></div></div>`;
+  main.innerHTML = html;
+
+  // re-bind any dynamic handlers after render
+  if (stage.content === "vocab") initDragDrop();
+}
+
+/* ---------- RENDERERS ---------- */
+function renderLeadin() {
+  let h = `<p>Talk about your school. Answer the questions aloud or write short answers. <span class="ua">(Поговори про свою школу)</span></p>`;
+  LESSON.leadin.questions.forEach((q, i) => {
+    h += `<div class="speaking-card"><h4>Question ${i+1}</h4><p>${q}</p>
+      <textarea rows="2" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;font-size:1rem;" placeholder="Your answer..."></textarea>
+    </div>`;
+  });
+  h += `<p style="margin-top:12px;"><em>Teacher tip:</em> Encourage full sentences. Model first if needed.</p>`;
+  return h;
+}
+
+function renderVocab() {
+  let h = `<p>Study these 20 key words from Unit 5. Click a card to flip (definition). <span class="ua">(Вивчи 20 слів)</span></p>
+    <div class="vocab-grid">`;
+  LESSON.vocabulary.forEach((v, i) => {
+    h += `<div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="word">${i+1}. ${v.word}</div>
+      <div class="def">${v.def}<br><span class="ua">${v.ua}</span></div>
+    </div>`;
+  });
+  h += `</div>`;
+
+  // Matching exercise
+  h += `<div class="exercise" id="ex-match">
+    <h3>Practice 1: Match the word to its definition (drag & drop)</h3>
+    <p class="ua">Перетягни слово до правильного визначення</p>
+    <div class="match-area" id="matchWords"></div>
+    <div id="matchDrops"></div>
+    <button class="check-btn" onclick="checkMatch()">Check</button>
+    <button class="hint-btn" onclick="hintMatch()">Hint</button>
+    <button class="show-btn hidden" id="showMatchBtn" onclick="showMatchAnswers()">Show answers</button>
+    <div class="feedback" id="fb-match"></div>
+  </div>`;
+
+  // Gap fill from book Ex1
+  h += renderGapExercise("ex1", LESSON.ex1);
+
+  // Choose option Ex2
+  h += renderMCExercise("ex2", LESSON.ex2);
+
+  return h;
+}
+
+function renderGrammar() {
+  let h = `<p>We use <strong>must / mustn't / should / shouldn't / doesn't have to</strong> for rules and advice.<br>
+  <strong>was / were / could / couldn't</strong> for the past. <span class="ua">(Модальні + минулий час)</span></p>`;
+
+  // CCQs
+  h += `<div class="exercise">
+    <h3>Concept Check Questions (CCQs)</h3>
+    <p>1. “You must wear a uniform.” – Is it a rule or advice? <em>(rule)</em></p>
+    <p>2. “You shouldn’t invite him.” – Is it necessary or not a good idea? <em>(not a good idea)</em></p>
+    <p>3. “She doesn’t have to come.” – Is it obligatory? <em>(no)</em></p>
+    <p>4. “I could swim when I was five.” – Ability now or in the past? <em>(past)</em></p>
+  </div>`;
+
+  h += renderGapExercise("ex3", LESSON.ex3);
+  h += renderGapExercise("ex4", LESSON.ex4);
+  return h;
+}
+
+function renderUseEng() {
+  let h = renderMCExercise("ex5", LESSON.ex5);
+  h += renderMCExercise("ex6", LESSON.ex6);
+  h += renderGapExercise("listening", LESSON.listening, true);
+  return h;
+}
+
+function renderReading() {
+  let h = `<div class="exercise">
+    <h3>${LESSON.reading.title}</h3>
+    <p>${LESSON.reading.instruction}</p>
+    <div style="background:#E8F5E9;padding:14px;border-radius:10px;margin:12px 0;max-height:280px;overflow-y:auto;font-size:0.95rem;">
+      ${LESSON.reading.text}
+    </div>`;
+  LESSON.reading.items.forEach((item, i) => {
+    const key = `reading-${i}`;
+    h += `<div class="q-item" id="q-${key}">
+      <div class="q-text">${item.q}</div>
+      <div class="tf-btns">
+        <button class="tf-btn" data-val="true" onclick="selectTF('${key}', true, this)">True</button>
+        <button class="tf-btn" data-val="false" onclick="selectTF('${key}', false, this)">False</button>
+      </div>
+      <div class="feedback" id="fb-${key}"></div>
+    </div>`;
+  });
+  h += `<button class="check-btn" onclick="checkTF()">Check answers</button>
+    <button class="hint-btn" onclick="hintTF()">Hint</button>
+    <button class="show-btn hidden" id="showTFBtn" onclick="showTFAnswers()">Show answers</button>
+  </div>`;
+
+  // Speaking about reading
+  h += `<div class="speaking-card">
+    <h4>Speaking after reading</h4>
+    <p>Would you like to study at Green School? Why / Why not? What is the most interesting thing about it?</p>
+    <textarea rows="3" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;" placeholder="Speak or write your ideas..."></textarea>
+  </div>`;
+  return h;
+}
+
+function renderSpeaking() {
+  const rp = LESSON.speaking.roleplay;
+  let h = `<div class="exercise">
+    <h3>${rp.title}</h3>
+    <p><strong>Museum information:</strong></p>
+    <pre style="white-space:pre-wrap;background:#FFF8E1;padding:12px;border-radius:8px;font-size:0.95rem;">${rp.info}</pre>
+    <div class="role-box">
+      <h4>Student A – Museum worker</h4>
+      <ul>${rp.studentA.map(x => `<li>${x}</li>`).join("")}</ul>
+    </div>
+    <div class="role-box">
+      <h4>Student B – Visitor (you with your class)</h4>
+      <ul>${rp.studentB.map(x => `<li>${x}</li>`).join("")}</ul>
+    </div>
+    <p class="ua">Практика в парах або з учителем. Немає автоперевірки – просто говори!</p>
+  </div>`;
+
+  h += `<div class="exercise">
+    <h3>Free speaking – personalisation</h3>
+    <p>Choose 2–3 questions and talk for 1–2 minutes each. <span class="ua">(Вільне говоріння)</span></p>`;
+  LESSON.speaking.free.forEach((q, i) => {
+    h += `<div class="speaking-card"><h4>${i+1}.</h4><p>${q}</p>
+      <textarea rows="2" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;" placeholder="Notes or full answer..."></textarea>
+    </div>`;
+  });
+  h += `</div>`;
+  return h;
+}
+
+function renderSummary() {
+  let h = `<p>Well done! You have revised Unit 5. <span class="ua">(Молодець! Ти повторив Unit 5)</span></p>
+    <div class="score-box" id="finalScore">Check your progress above ⬆</div>
+    <h3>Key language today:</h3>
+    <ul class="summary-list">
+      <li><strong>Vocabulary:</strong> retake, private/state/mixed school, put up a tent, nursery/primary, sports field, experiments, download, miss, opening times, give a speech, revise…</li>
+      <li><strong>Grammar:</strong> must / mustn't / should / shouldn't / doesn't have to • was/were • could/couldn't</li>
+      <li><strong>Reading:</strong> Green School – eco-friendly education</li>
+      <li><strong>Speaking:</strong> Museum role-play + personal opinions about school</li>
+    </ul>
+    <div class="speaking-card">
+      <h4>Exit ticket (1 min)</h4>
+      <p>Write or say one new word and one sentence with a modal you learned today.</p>
+      <textarea rows="2" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;"></textarea>
+    </div>
+    <p style="margin-top:16px;text-align:center;">Thank you! See you next lesson 🌱</p>`;
+  return h;
+}
+
+/* ---------- GENERIC RENDERERS ---------- */
+function renderGapExercise(id, data, showText = false) {
+  let h = `<div class="exercise" id="ex-${id}">
+    <h3>${data.title}</h3>
+    <p>${data.instruction}</p>`;
+  if (data.words) h += `<p><em>Words: ${data.words.join(" / ")}</em></p>`;
+  if (showText && data.text) {
+    h += `<div style="background:#E3F2FD;padding:12px;border-radius:8px;margin:10px 0;font-size:0.95rem;">${data.text}</div>`;
+  }
+  data.items.forEach((item, i) => {
+    const key = `${id}-${i}`;
+    const isMulti = Array.isArray(item.a);
+    h += `<div class="q-item" id="q-${key}">
+      <div class="q-text">${item.q}</div>`;
+    if (isMulti) {
+      item.a.forEach((_, j) => {
+        h += `<input type="text" id="inp-${key}-${j}" placeholder="answer ${j+1}" autocomplete="off"> `;
+      });
+    } else {
+      h += `<input type="text" id="inp-${key}" placeholder="your answer" autocomplete="off">`;
+    }
+    h += `<div class="feedback" id="fb-${key}"></div></div>`;
+  });
+  h += `<button class="check-btn" onclick="checkGaps('${id}')">Check</button>
+    <button class="hint-btn" onclick="hintGaps('${id}')">Hint</button>
+    <button class="show-btn hidden" id="show-${id}" onclick="showGaps('${id}')">Show answers</button>
+  </div>`;
+  return h;
+}
+
+function renderMCExercise(id, data) {
+  let h = `<div class="exercise" id="ex-${id}">
+    <h3>${data.title}</h3>
+    <p>${data.instruction}</p>`;
+  data.items.forEach((item, i) => {
+    const key = `${id}-${i}`;
+    h += `<div class="q-item" id="q-${key}">
+      <div class="q-text">${item.q}</div>
+      <div class="options">`;
+    item.options.forEach((opt, oi) => {
+      h += `<button class="option-btn" onclick="selectMC('${key}','${opt.replace(/'/g,"\\'")}', this)">${opt}</button>`;
+    });
+    h += `</div><div class="feedback" id="fb-${key}"></div></div>`;
+  });
+  h += `<button class="check-btn" onclick="checkMC('${id}')">Check</button>
+    <button class="hint-btn" onclick="hintMC('${id}')">Hint</button>
+    <button class="show-btn hidden" id="show-${id}" onclick="showMC('${id}')">Show answers</button>
+  </div>`;
+  return h;
+}
+
+/* ---------- INTERACTION LOGIC ---------- */
+function getAttempts(key) {
+  if (!attempts[key]) attempts[key] = 0;
+  return attempts[key];
+}
+function incAttempts(key) {
+  attempts[key] = (attempts[key] || 0) + 1;
+  return attempts[key];
+}
+
+/* Matching drag & drop */
+const matchPairs = [
+  { word: "retake", def: "do a test again" },
+  { word: "private school", def: "parents pay for it" },
+  { word: "mustn't", def: "it is forbidden" },
+  { word: "nursery school", def: "for children 3–5 years old" },
+  { word: "revise", def: "study again before a test" },
+  { word: "sports field", def: "outdoor area for football" }
+];
+
+function initDragDrop() {
+  const wordsEl = $("#matchWords");
+  const dropsEl = $("#matchDrops");
+  if (!wordsEl) return;
+  const shuffled = [...matchPairs].sort(() => Math.random() - 0.5);
+  wordsEl.innerHTML = shuffled.map(p =>
+    `<div class="match-item" draggable="true" data-word="${p.word}">${p.word}</div>`
+  ).join("");
+  dropsEl.innerHTML = matchPairs.map(p =>
+    `<div class="drop-zone" data-def="${p.def}"><span class="drop-label">${p.def}</span></div>`
+  ).join("");
+
+  // Desktop drag
+  $all(".match-item").forEach(item => {
+    item.addEventListener("dragstart", e => {
+      e.dataTransfer.setData("text/plain", item.dataset.word);
+      item.classList.add("dragging");
+    });
+    item.addEventListener("dragend", () => item.classList.remove("dragging"));
+  });
+  $all(".drop-zone").forEach(zone => {
+    zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("over"); });
+    zone.addEventListener("dragleave", () => zone.classList.remove("over"));
+    zone.addEventListener("drop", e => {
+      e.preventDefault();
+      zone.classList.remove("over");
+      const word = e.dataTransfer.getData("text/plain");
+      const existing = zone.querySelector(".match-item");
+      if (existing) {
+        $("#matchWords").appendChild(existing);
+      }
+      const dragged = [...$all(".match-item")].find(el => el.dataset.word === word);
+      if (dragged) zone.appendChild(dragged);
+    });
+  });
+
+  // Touch support
+  let touchItem = null;
+  $all(".match-item").forEach(item => {
+    item.addEventListener("touchstart", e => {
+      touchItem = item;
+      item.classList.add("dragging");
+    }, {passive: true});
+    item.addEventListener("touchend", e => {
+      if (!touchItem) return;
+      const touch = e.changedTouches[0];
+      const el = document.elementFromPoint(touch.clientX, touch.clientY);
+      const zone = el?.closest(".drop-zone");
+      if (zone) {
+        const existing = zone.querySelector(".match-item");
+        if (existing) $("#matchWords").appendChild(existing);
+        zone.appendChild(touchItem);
+      }
+      touchItem.classList.remove("dragging");
+      touchItem = null;
+    });
+  });
+}
+
+function checkMatch() {
+  let correct = 0;
+  $all("#matchDrops .drop-zone").forEach(zone => {
+    const item = zone.querySelector(".match-item");
+    const expected = matchPairs.find(p => p.def === zone.dataset.def)?.word;
+    if (item && item.dataset.word === expected) {
+      correct++;
+      item.style.borderColor = "var(--success)";
+    } else if (item) {
+      item.style.borderColor = "var(--error)";
+    }
+  });
+  const fb = $("#fb-match");
+  const total = matchPairs.length;
+  if (correct === total) {
+    fb.className = "feedback ok";
+    fb.textContent = `Excellent! ${correct}/${total} correct.`;
+  } else {
+    const att = incAttempts("match");
+    fb.className = "feedback err";
+    fb.textContent = `${correct}/${total} correct. Try again!`;
+    if (att >= 2) $("#showMatchBtn").classList.remove("hidden");
+  }
+}
+
+function hintMatch() {
+  const fb = $("#fb-match");
+  fb.className = "feedback hint";
+  fb.textContent = "Hint: Look at the first letters and think about school vocabulary. ‘Parents pay’ = private school.";
+}
+
+function showMatchAnswers() {
+  $all("#matchDrops .drop-zone").forEach(zone => {
+    const expected = matchPairs.find(p => p.def === zone.dataset.def)?.word;
+    let item = zone.querySelector(".match-item");
+    if (item) $("#matchWords").appendChild(item);
+    const correctItem = [...$all(".match-item")].find(el => el.dataset.word === expected);
+    if (correctItem) zone.appendChild(correctItem);
+    if (correctItem) correctItem.style.borderColor = "var(--success)";
+  });
+  $("#fb-match").className = "feedback ok";
+  $("#fb-match").textContent = "Answers shown.";
+}
+
+/* Gap fill */
+function checkGaps(exId) {
+  const data = LESSON[exId] || (exId === "listening" ? LESSON.listening : null);
+  if (!data) return;
+  let allCorrect = true;
+  data.items.forEach((item, i) => {
+    const key = `${exId}-${i}`;
+    const answers = Array.isArray(item.a) ? item.a : [item.a];
+    let itemOk = true;
+    answers.forEach((ans, j) => {
+      const inp = $(`#inp-${key}${answers.length > 1 ? "-" + j : ""}`);
+      if (!inp) return;
+      const user = (inp.value || "").trim().toLowerCase();
+      const possible = ans.toLowerCase().split(" / ");
+      const ok = possible.some(p => user === p || user === p.replace(/[^a-z0-9]/g, ""));
+      if (ok) {
+        inp.style.borderColor = "var(--success)";
+      } else {
+        inp.style.borderColor = "var(--error)";
+        itemOk = false;
+        allCorrect = false;
+      }
+    });
+    const fb = $(`#fb-${key}`);
+    if (itemOk) {
+      fb.className = "feedback ok";
+      fb.textContent = "✓ Correct";
+    } else {
+      const att = incAttempts(key);
+      fb.className = "feedback err";
+      fb.textContent = att >= 2 ? "Still incorrect. You can show the answer." : "Not quite. Try again or use Hint.";
+      if (att >= 2) $(`#show-${exId}`)?.classList.remove("hidden");
+    }
+  });
+  if (allCorrect) {
+    // optional global message
+  }
+}
+
+function hintGaps(exId) {
+  const data = LESSON[exId] || (exId === "listening" ? LESSON.listening : null);
+  if (!data) return;
+  data.items.forEach((item, i) => {
+    const key = `${exId}-${i}`;
+    const fb = $(`#fb-${key}`);
+    const inp = $(`#inp-${key}`) || $(`#inp-${key}-0`);
+    if (inp && inp.style.borderColor === "var(--error)" || !inp?.value) {
+      fb.className = "feedback hint";
+      fb.textContent = "Hint: " + (item.hint || "Think about the meaning.");
+    }
+  });
+}
+
+function showGaps(exId) {
+  const data = LESSON[exId] || (exId === "listening" ? LESSON.listening : null);
+  if (!data) return;
+  data.items.forEach((item, i) => {
+    const key = `${exId}-${i}`;
+    const answers = Array.isArray(item.a) ? item.a : [item.a];
+    answers.forEach((ans, j) => {
+      const inp = $(`#inp-${key}${answers.length > 1 ? "-" + j : ""}`);
+      if (inp) {
+        inp.value = ans.split(" / ")[0];
+        inp.style.borderColor = "var(--success)";
+      }
+    });
+    const fb = $(`#fb-${key}`);
+    fb.className = "feedback ok";
+    fb.textContent = "Answer shown: " + answers.join(" / ");
+  });
+}
+
+/* Multiple choice */
+function selectMC(key, value, btn) {
+  const parent = btn.closest(".options");
+  parent.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+  btn.dataset.selected = value;
+}
+
+function checkMC(exId) {
+  const data = LESSON[exId];
+  if (!data) return;
+  data.items.forEach((item, i) => {
+    const key = `${exId}-${i}`;
+    const selectedBtn = $(`#q-${key} .option-btn.selected`);
+    const fb = $(`#fb-${key}`);
+    if (!selectedBtn) {
+      fb.className = "feedback err";
+      fb.textContent = "Please choose an answer.";
+      return;
+    }
+    const user = selectedBtn.dataset.selected || selectedBtn.textContent;
+    const correct = item.a;
+    if (user === correct || user.includes(correct.replace(/^[A-C]\s*/, ""))) {
+      selectedBtn.classList.add("correct");
+      fb.className = "feedback ok";
+      fb.textContent = "✓ Correct!";
+    } else {
+      selectedBtn.classList.add("wrong");
+      const att = incAttempts(key);
+      fb.className = "feedback err";
+      fb.textContent = att >= 2 ? "Incorrect. You can show the answer." : "Not correct. Try again or use Hint.";
+      if (att >= 2) $(`#show-${exId}`)?.classList.remove("hidden");
+    }
+  });
+}
+
+function hintMC(exId) {
+  const data = LESSON[exId];
+  data.items.forEach((item, i) => {
+    const key = `${exId}-${i}`;
+    const selected = $(`#q-${key} .option-btn.selected`);
+    const fb = $(`#fb-${key}`);
+    if (!selected || selected.classList.contains("wrong")) {
+      fb.className = "feedback hint";
+      fb.textContent = "Hint: " + (item.hint || "Read the dialogue carefully.");
+    }
+  });
+}
+
+function showMC(exId) {
+  const data = LESSON[exId];
+  data.items.forEach((item, i) => {
+    const key = `${exId}-${i}`;
+    const btns = $all(`#q-${key} .option-btn`);
+    btns.forEach(b => {
+      b.classList.remove("selected", "wrong", "correct");
+      if (b.textContent === item.a || b.textContent.includes(item.a.replace(/^[A-C]\s*/, ""))) {
+        b.classList.add("correct");
+      }
+    });
+    const fb = $(`#fb-${key}`);
+    fb.className = "feedback ok";
+    fb.textContent = "Answer: " + item.a;
+  });
+}
+
+/* True / False */
+let tfAnswers = {};
+function selectTF(key, val, btn) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll(".tf-btn").forEach(b => {
+    b.classList.remove("true-selected", "false-selected");
+  });
+  btn.classList.add(val ? "true-selected" : "false-selected");
+  tfAnswers[key] = val;
+}
+
+function checkTF() {
+  LESSON.reading.items.forEach((item, i) => {
+    const key = `reading-${i}`;
+    const fb = $(`#fb-${key}`);
+    if (tfAnswers[key] === undefined) {
+      fb.className = "feedback err";
+      fb.textContent = "Please choose True or False.";
+      return;
+    }
+    if (tfAnswers[key] === item.a) {
+      fb.className = "feedback ok";
+      fb.textContent = "✓ Correct!";
+    } else {
+      const att = incAttempts(key);
+      fb.className = "feedback err";
+      fb.textContent = att >= 2 ? "Incorrect. You can show the answer." : "Not correct. Try again or use Hint.";
+      if (att >= 2) $("#showTFBtn")?.classList.remove("hidden");
+    }
+  });
+}
+
+function hintTF() {
+  LESSON.reading.items.forEach((item, i) => {
+    const key = `reading-${i}`;
+    if (tfAnswers[key] !== item.a) {
+      const fb = $(`#fb-${key}`);
+      fb.className = "feedback hint";
+      fb.textContent = "Hint: " + item.hint;
+    }
+  });
+}
+
+function showTFAnswers() {
+  LESSON.reading.items.forEach((item, i) => {
+    const key = `reading-${i}`;
+    const fb = $(`#fb-${key}`);
+    fb.className = "feedback ok";
+    fb.textContent = "Answer: " + (item.a ? "True" : "False") + " – " + item.hint;
+    // highlight correct button
+    const btns = $all(`#q-${key} .tf-btn`);
+    btns.forEach(b => {
+      b.classList.remove("true-selected", "false-selected");
+      if ((b.dataset.val === "true" && item.a) || (b.dataset.val === "false" && !item.a)) {
+        b.classList.add(item.a ? "true-selected" : "false-selected");
+      }
+    });
+  });
+}
+
+function restartLesson() {
+  if (confirm("Start the lesson from the beginning? / Почати урок спочатку?")) {
+    attempts = {};
+    tfAnswers = {};
+    currentStage = 0;
+    showStage(0);
+    window.scrollTo(0, 0);
+  }
+}
+
+// Start
+init();
+</script>
+</body>
+</html>
