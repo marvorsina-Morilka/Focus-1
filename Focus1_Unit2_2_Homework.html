@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Focus 1 · Unit 2/2 h/w</title>
+<style>
+  :root {
+    --green: #2E7D32;
+    --green-light: #4CAF50;
+    --green-dark: #1B5E20;
+    --orange: #F57C00;
+    --orange-light: #FF9800;
+    --bg: #F5F7FA;
+    --text: #212121;
+    --muted: #616161;
+    --border: #E0E0E0;
+    --success: #2E7D32;
+    --error: #C62828;
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    font-size: 16.5px;
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+  .app { max-width: 820px; margin: 0 auto; padding: 16px; }
+  header {
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    color: white;
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  header h1 { font-size: 1.3rem; margin-bottom: 4px; }
+  header .meta { font-size: 0.9rem; opacity: 0.9; }
+  .section {
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .section h2 {
+    color: var(--green-dark);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge {
+    background: var(--orange);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 99px;
+  }
+  .aim { color: var(--muted); font-size: 0.85rem; margin-bottom: 10px; }
+  .hint-ua {
+    background: #FFF8E1;
+    border-left: 4px solid var(--orange);
+    padding: 7px 10px;
+    margin: 6px 0 10px;
+    font-size: 0.84rem;
+    color: #5D4037;
+    border-radius: 0 8px 8px 0;
+  }
+  .q-num {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-weight: 700;
+    font-size: 0.78rem;
+    margin-right: 6px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--green); color: white; }
+  .btn-outline { background: white; border: 2px solid var(--green); color: var(--green); }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+  .feedback {
+    margin-top: 5px;
+    padding: 6px 9px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: none;
+    font-size: 0.86rem;
+  }
+  .feedback.correct { background: #E8F5E9; color: var(--success); display: block; }
+  .feedback.wrong { background: #FFEBEE; color: var(--error); display: block; }
+  .gap-input {
+    border: none;
+    border-bottom: 2px solid var(--orange);
+    background: #FFF8E1;
+    padding: 2px 6px;
+    font-size: 0.95rem;
+    min-width: 80px;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .mc-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 11px;
+    margin: 4px 0;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .mc-option.selected { border-color: var(--orange); background: #FFF3E0; }
+  .mc-option.correct-ans { border-color: var(--success); background: #E8F5E9; }
+  .mc-option.wrong-ans { border-color: var(--error); background: #FFEBEE; }
+  .dialogue-box {
+    background: #F5F5F5;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.9rem;
+    line-height: 1.75;
+    margin-bottom: 8px;
+  }
+  .cat-btn {
+    padding: 6px 12px;
+    margin: 3px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .cat-btn.sel-c { border-color: var(--green); background: #E8F5E9; }
+  .cat-btn.sel-u { border-color: var(--orange); background: #FFF3E0; }
+  .score-box {
+    background: linear-gradient(135deg, #E8F5E9, #FFF3E0);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    margin-top: 16px;
+    display: none;
+    border: 2px solid var(--green-light);
+  }
+  .score-box.visible { display: block; }
+  .score-num { font-size: 2.2rem; font-weight: 800; color: var(--green-dark); }
+  .score-pct { font-size: 1.2rem; color: var(--orange); font-weight: 700; margin: 4px 0 10px; }
+  .breakdown { text-align: left; margin-top: 10px; font-size: 0.9rem; }
+  .breakdown div { padding: 4px 0; border-bottom: 1px solid #C8E6C9; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Focus 1 · Unit 2/2 h/w</h1>
+    <div class="meta">Countable and Uncountable Nouns · Grammar</div>
+  </header>
+
+  <!-- EX 1 Plurals -->
+  <div class="section">
+    <h2><span class="badge">1</span> Write the plural forms</h2>
+    <div class="aim">Write the plural of the nouns in brackets. (5 points)</div>
+    <div class="hint-ua">🇺🇦 Напиши множину іменників у дужках.</div>
+    <div id="plItems"></div>
+  </div>
+
+  <!-- EX 2 Countable / Uncountable -->
+  <div class="section">
+    <h2><span class="badge">2</span> Countable or Uncountable?</h2>
+    <div class="aim">Click C (countable) or U (uncountable) for each food item. (8 points)</div>
+    <div class="hint-ua">🇺🇦 Натисни C (policzalne) або U (niepoliczalne).</div>
+    <div id="cuItems"></div>
+  </div>
+
+  <!-- EX 3 some / any -->
+  <div class="section">
+    <h2><span class="badge">3</span> Choose the correct option</h2>
+    <div class="aim">Choose the correct form. (6 points)</div>
+    <div class="hint-ua">🇺🇦 Обери правильний варіант (some / any / is / are…).</div>
+    <div id="saItems"></div>
+  </div>
+
+  <!-- EX 4 Questions & short answers -->
+  <div class="section">
+    <h2><span class="badge">4</span> Complete the questions and short answers</h2>
+    <div class="aim">Write the missing words. (6 points)</div>
+    <div class="hint-ua">🇺🇦 Допиши питання і короткі відповіді (Is there / Are there / Yes, there is…).</div>
+    <div class="dialogue-box">
+      <strong>Woman:</strong> Can you make a shopping list and go shopping for me?<br>
+      <strong>Man:</strong> OK. What do you want?<br>
+      <strong>Woman:</strong> I don’t know. That’s why I want you to make a list.<br>
+      <strong>Man:</strong> Right. <span class="q-num">1</span><input class="gap-input" id="qa-0" data-answer="is there any" style="min-width:110px"> fruit?<br>
+      <strong>Woman:</strong> <span class="q-num">2</span><input class="gap-input" id="qa-1" data-answer="yes there is" style="min-width:100px">. There are apples and oranges.<br>
+      <strong>Man:</strong> Good. <span class="q-num">3</span><input class="gap-input" id="qa-2" data-answer="are there any" style="min-width:110px"> eggs?<br>
+      <strong>Woman:</strong> <span class="q-num">4</span><input class="gap-input" id="qa-3" data-answer="yes there are" style="min-width:100px">.<br>
+      <strong>Man:</strong> Great. <span class="q-num">5</span><input class="gap-input" id="qa-4" data-answer="is there any" style="min-width:110px"> ketchup?<br>
+      <strong>Woman:</strong> <span class="q-num">6</span><input class="gap-input" id="qa-5" data-answer="no there isn't" style="min-width:100px">.
+    </div>
+    <div id="qaFeedback"></div>
+    <div class="btn-row"><button class="btn btn-outline" onclick="checkQA()">Check</button></div>
+  </div>
+
+  <!-- EX 5 How much / How many -->
+  <div class="section">
+    <h2><span class="badge">5</span> How much / How many / a lot of…</h2>
+    <div class="aim">Complete with one word in each gap. (6 points)</div>
+    <div class="hint-ua">🇺🇦 Впиши one word: much, many, a, lot, of, any…</div>
+    <div class="dialogue-box">
+      <strong>Maggie:</strong> How much fruit do you eat, Alex?<br>
+      <strong>Alex:</strong> Oh, I eat <span class="q-num">1</span><input class="gap-input" id="hm-0" data-answer="a lot"> of fruit. I love apples.<br>
+      <strong>Maggie:</strong> So, <span class="q-num">2</span><input class="gap-input" id="hm-1" data-answer="how many"> apples do you eat in a week?<br>
+      <strong>Alex:</strong> I eat about two a day, so fourteen.<br>
+      <strong>Maggie:</strong> Wow. That’s <span class="q-num">3</span><input class="gap-input" id="hm-2" data-answer="a"> lot. What about other food? <span class="q-num">4</span><input class="gap-input" id="hm-3" data-answer="how many"> eggs do you eat?<br>
+      <strong>Alex:</strong> <span class="q-num">5</span><input class="gap-input" id="hm-4" data-answer="not many">. One or two a month.<br>
+      <strong>Maggie:</strong> And <span class="q-num">6</span><input class="gap-input" id="hm-5" data-answer="how much"> cheese do you eat?
+    </div>
+    <div id="hmFeedback"></div>
+    <div class="btn-row"><button class="btn btn-outline" onclick="checkHM()">Check</button></div>
+  </div>
+
+  <!-- EX 6 Dialogue some/any/much/many -->
+  <div class="section">
+    <h2><span class="badge">6</span> Complete the dialogue</h2>
+    <div class="aim">Write one word in each gap. (6 points)</div>
+    <div class="hint-ua">🇺🇦 Впиши one word у кожен пропуск.</div>
+    <div class="dialogue-box">
+      <strong>Tanya:</strong> The party starts in an hour. Are you ready?<br>
+      <strong>Brett:</strong> I think so. Are there <em>any</em> crisps here?<br>
+      <strong>Tanya:</strong> Yes, there <span class="q-num">1</span><input class="gap-input" id="dl-0" data-answer="are">. There are a <span class="q-num">2</span><input class="gap-input" id="dl-1" data-answer="lot"> of packets in the kitchen. About twenty, I think.<br>
+      <strong>Brett:</strong> Twenty! Wow. And have we got any cola?<br>
+      <strong>Tanya:</strong> Yes. Not <span class="q-num">3</span><input class="gap-input" id="dl-2" data-answer="much">. One or two bottles.<br>
+      <strong>Brett:</strong> Oh. Why not more?<br>
+      <strong>Tanya:</strong> Well, there is a <span class="q-num">4</span><input class="gap-input" id="dl-3" data-answer="lot"> of juice and <span class="q-num">5</span><input class="gap-input" id="dl-4" data-answer="not"> many of our guests drink cola.<br>
+      <strong>Brett:</strong> OK, you know best. Oh, here’s the phone number of the pizza restaurant. We can order some for nine o’clock.<br>
+      <strong>Tanya:</strong> Good idea. How <span class="q-num">6</span><input class="gap-input" id="dl-5" data-answer="many"> do you want?
+    </div>
+    <div id="dlFeedback"></div>
+    <div class="btn-row"><button class="btn btn-outline" onclick="checkDL()">Check</button></div>
+  </div>
+
+  <div style="text-align:center;margin:18px 0">
+    <button class="btn btn-primary" style="font-size:1rem;padding:12px 24px" onclick="calculateScore()">Check all & see my score</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div>Your total score</div>
+    <div class="score-num" id="scoreNum">0 / 37</div>
+    <div class="score-pct" id="scorePct">0%</div>
+    <div class="breakdown" id="breakdown"></div>
+    <div id="scoreMsg" style="margin-top:10px;font-weight:600"></div>
+  </div>
+
+  <footer>Focus 1 · Unit 2/2 Homework · Countable & Uncountable Nouns</footer>
+</div>
+
+<script>
+const hw = {
+  plurals: [
+    { q: "Do you want ______ (potato) with your chicken or do you prefer rice?", answer: "potatoes" },
+    { q: "I love June. ______ (strawberry) are so cheap.", answer: "strawberries" },
+    { q: "For a real Spanish omelette, you need five or six ______ (egg).", answer: "eggs" },
+    { q: "When I cut ______ (onion), I always cry.", answer: "onions" },
+    { q: "These ______ (orange) are very juicy.", answer: "oranges" }
+  ],
+  cu: [
+    { word: "egg", type: "C" },
+    { word: "bread", type: "U" },
+    { word: "apple", type: "C" },
+    { word: "milk", type: "U" },
+    { word: "carrot", type: "C" },
+    { word: "cheese", type: "U" },
+    { word: "tomato", type: "C" },
+    { word: "rice", type: "U" }
+  ],
+  someAny: [
+    { q: "There ______ cheese in the fridge.", options: ["is some", "are some", "is any"], answer: 0 },
+    { q: "______ mushrooms? I can’t see them.", options: ["Is there any", "Are there any", "Is there some"], answer: 1 },
+    { q: "There ______ spaghetti.", options: ["isn’t some", "aren’t some", "isn’t any"], answer: 2 },
+    { q: "______ bread?", options: ["Is there any", "Are there some", "Are there any"], answer: 0 },
+    { q: "There ______ potatoes. We can have fried eggs and potatoes.", options: ["is some", "are some", "are any"], answer: 1 },
+    { q: "There ______ eggs.", options: ["isn’t any", "aren’t some", "aren’t any"], answer: 2 }
+  ]
+};
+
+const results = { pl: 0, cu: 0, sa: 0, qa: 0, hm: 0, dl: 0 };
+const cuAnswers = {};
+
+function init() {
+  buildPl();
+  buildCU();
+  buildSA();
+}
+
+function buildPl() {
+  const box = document.getElementById("plItems");
+  hw.plurals.forEach((item, i) => {
+    const parts = item.q.split("______");
+    box.innerHTML += `<div style="margin:8px 0">
+      <div><span class="q-num">${i+1}</span>${parts[0]}<input class="gap-input" id="pl-${i}" data-answer="${item.answer}">${parts[1]||""}</div>
+      <div class="feedback" id="fb-pl-${i}"></div>
+      <div class="btn-row"><button class="btn btn-outline" onclick="checkPl(${i})">Check</button></div>
+    </div>`;
+  });
+}
+
+function checkPl(i) {
+  const input = document.getElementById("pl-" + i);
+  const user = input.value.trim().toLowerCase();
+  const correct = input.dataset.answer.toLowerCase();
+  const fb = document.getElementById("fb-pl-" + i);
+  if (user === correct) {
+    fb.className = "feedback correct";
+    fb.textContent = "✓ Correct!";
+  } else {
+    fb.className = "feedback wrong";
+    fb.textContent = "✗ Wrong";
+  }
+  results.pl = countCorrect("pl", 5);
+}
+
+function buildCU() {
+  const box = document.getElementById("cuItems");
+  hw.cu.forEach((item, i) => {
+    box.innerHTML += `<div style="margin:6px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <strong style="min-width:80px">${item.word}</strong>
+      <button class="cat-btn" data-i="${i}" data-v="C" onclick="selCU(this)">C – countable</button>
+      <button class="cat-btn" data-i="${i}" data-v="U" onclick="selCU(this)">U – uncountable</button>
+      <span class="feedback" id="fb-cu-${i}" style="display:none;margin:0"></span>
+    </div>`;
+  });
+}
+
+function selCU(btn) {
+  const i = btn.dataset.i;
+  const parent = btn.parentElement;
+  parent.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("sel-c", "sel-u"));
+  btn.classList.add(btn.dataset.v === "C" ? "sel-c" : "sel-u");
+  cuAnswers[i] = btn.dataset.v;
+  // auto check
+  const correct = hw.cu[i].type;
+  const fb = document.getElementById("fb-cu-" + i);
+  if (btn.dataset.v === correct) {
+    fb.className = "feedback correct";
+    fb.style.display = "inline";
+    fb.textContent = "✓";
+  } else {
+    fb.className = "feedback wrong";
+    fb.style.display = "inline";
+    fb.textContent = "✗";
+  }
+  results.cu = 0;
+  for (let j = 0; j < 8; j++) {
+    if (cuAnswers[j] === hw.cu[j].type) results.cu++;
+  }
+}
+
+function buildSA() {
+  const box = document.getElementById("saItems");
+  hw.someAny.forEach((item, i) => {
+    let opts = item.options.map((o, oi) =>
+      `<button class="mc-option" data-ex="sa" data-i="${i}" data-oi="${oi}" onclick="selMC(this)">${o}</button>`
+    ).join("");
+    box.innerHTML += `<div style="margin:10px 0"><div><span class="q-num">${i+1}</span>${item.q}</div>${opts}
+      <div class="feedback" id="fb-sa-${i}"></div>
+      <div class="btn-row"><button class="btn btn-outline" onclick="checkSA(${i})">Check</button></div></div>`;
+  });
+}
+
+function selMC(btn) {
+  const i = btn.dataset.i;
+  const ex = btn.dataset.ex;
+  document.querySelectorAll(`.mc-option[data-ex="${ex}"][data-i="${i}"]`).forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+}
+
+function checkSA(i) {
+  const sel = document.querySelector(`.mc-option[data-ex="sa"][data-i="${i}"].selected`);
+  if (!sel) return;
+  const oi = +sel.dataset.oi;
+  const fb = document.getElementById("fb-sa-" + i);
+  if (oi === hw.someAny[i].answer) {
+    fb.className = "feedback correct";
+    fb.textContent = "✓ Correct!";
+    sel.classList.add("correct-ans");
+  } else {
+    fb.className = "feedback wrong";
+    fb.textContent = "✗ Wrong";
+    sel.classList.add("wrong-ans");
+  }
+  results.sa = 0;
+  for (let j = 0; j < 6; j++) {
+    const fbj = document.getElementById("fb-sa-" + j);
+    if (fbj && fbj.classList.contains("correct")) results.sa++;
+  }
+}
+
+function norm(s) {
+  return s.trim().toLowerCase().replace(/[.,!?]/g, "").replace(/\s+/g, " ");
+}
+
+function checkQA() {
+  const answers = [
+    ["is there any", "is there any fruit"],
+    ["yes there is", "yes, there is"],
+    ["are there any", "are there any eggs"],
+    ["yes there are", "yes, there are"],
+    ["is there any", "is there any ketchup"],
+    ["no there isn't", "no, there isn't", "no there is not"]
+  ];
+  let c = 0;
+  for (let i = 0; i < 6; i++) {
+    const user = norm(document.getElementById("qa-" + i).value);
+    if (answers[i].some(a => user === a || user.includes(a))) c++;
+  }
+  results.qa = c;
+  document.getElementById("qaFeedback").innerHTML =
+    `<div class="feedback ${c===6?'correct':'wrong'}">${c===6?'✓ All correct!':`✗ ${c}/6 correct`}</div>`;
+}
+
+function checkHM() {
+  const answers = [
+    ["a lot", "alot"],
+    ["how many"],
+    ["a"],
+    ["how many"],
+    ["not many", "not a lot"],
+    ["how much"]
+  ];
+  let c = 0;
+  for (let i = 0; i < 6; i++) {
+    const user = norm(document.getElementById("hm-" + i).value);
+    if (answers[i].some(a => user === a)) c++;
+  }
+  results.hm = c;
+  document.getElementById("hmFeedback").innerHTML =
+    `<div class="feedback ${c===6?'correct':'wrong'}">${c===6?'✓ All correct!':`✗ ${c}/6 correct`}</div>`;
+}
+
+function checkDL() {
+  const answers = [
+    ["are"],
+    ["lot"],
+    ["much"],
+    ["lot"],
+    ["not"],
+    ["many"]
+  ];
+  let c = 0;
+  for (let i = 0; i < 6; i++) {
+    const user = norm(document.getElementById("dl-" + i).value);
+    if (answers[i].some(a => user === a)) c++;
+  }
+  results.dl = c;
+  document.getElementById("dlFeedback").innerHTML =
+    `<div class="feedback ${c===6?'correct':'wrong'}">${c===6?'✓ All correct!':`✗ ${c}/6 correct`}</div>`;
+}
+
+function countCorrect(prefix, total) {
+  let c = 0;
+  for (let i = 0; i < total; i++) {
+    const fb = document.getElementById(`fb-${prefix}-${i}`);
+    if (fb && fb.classList.contains("correct")) c++;
+  }
+  return c;
+}
+
+function calculateScore() {
+  results.pl = countCorrect("pl", 5);
+  results.sa = 0;
+  for (let j = 0; j < 6; j++) {
+    const fbj = document.getElementById("fb-sa-" + j);
+    if (fbj && fbj.classList.contains("correct")) results.sa++;
+  }
+  // refresh qa/hm/dl if needed
+  if (results.qa === 0) checkQA();
+  if (results.hm === 0) checkHM();
+  if (results.dl === 0) checkDL();
+
+  const total = results.pl + results.cu + results.sa + results.qa + results.hm + results.dl;
+  const max = 37;
+  const pct = Math.round((total / max) * 100);
+
+  document.getElementById("scoreNum").textContent = `${total} / ${max}`;
+  document.getElementById("scorePct").textContent = `${pct}%`;
+  document.getElementById("breakdown").innerHTML = `
+    <div>1. Plural forms: <strong>${results.pl}/5</strong></div>
+    <div>2. Countable / Uncountable: <strong>${results.cu}/8</strong></div>
+    <div>3. some / any: <strong>${results.sa}/6</strong></div>
+    <div>4. Questions & short answers: <strong>${results.qa}/6</strong></div>
+    <div>5. How much / How many: <strong>${results.hm}/6</strong></div>
+    <div>6. Complete the dialogue: <strong>${results.dl}/6</strong></div>`;
+
+  let msg = "";
+  if (pct >= 90) msg = "Excellent work! 🌟";
+  else if (pct >= 70) msg = "Good job! Check the mistakes.";
+  else if (pct >= 50) msg = "Not bad – revise countable/uncountable rules.";
+  else msg = "Look at the grammar rules again and try once more.";
+  document.getElementById("scoreMsg").textContent = msg;
+
+  const box = document.getElementById("scoreBox");
+  box.classList.add("visible");
+  box.scrollIntoView({ behavior: "smooth" });
+}
+
+init();
+</script>
+</body>
+</html>
