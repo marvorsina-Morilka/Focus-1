@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Focus 1 · Unit 7/1 h/w</title>
+<style>
+  :root {
+    --green: #2E7D32;
+    --green-light: #4CAF50;
+    --green-dark: #1B5E20;
+    --orange: #F57C00;
+    --bg: #F5F7FA;
+    --text: #212121;
+    --muted: #616161;
+    --border: #E0E0E0;
+    --success: #2E7D32;
+    --error: #C62828;
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    font-size: 16.5px;
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+  .app { max-width: 820px; margin: 0 auto; padding: 16px; }
+  header {
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    color: white;
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  header h1 { font-size: 1.3rem; margin-bottom: 4px; }
+  header .meta { font-size: 0.9rem; opacity: 0.9; }
+  .section {
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .section h2 {
+    color: var(--green-dark);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge {
+    background: var(--orange);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 99px;
+  }
+  .aim { color: var(--muted); font-size: 0.85rem; margin-bottom: 10px; }
+  .hint-ua {
+    background: #FFF8E1;
+    border-left: 4px solid var(--orange);
+    padding: 7px 10px;
+    margin: 6px 0 10px;
+    font-size: 0.84rem;
+    color: #5D4037;
+    border-radius: 0 8px 8px 0;
+  }
+  .q-num {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-weight: 700;
+    font-size: 0.78rem;
+    margin-right: 6px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--green); color: white; }
+  .btn-outline { background: white; border: 2px solid var(--green); color: var(--green); }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+  .feedback {
+    margin-top: 5px;
+    padding: 6px 9px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: none;
+    font-size: 0.86rem;
+  }
+  .feedback.correct { background: #E8F5E9; color: var(--success); display: block; }
+  .feedback.wrong { background: #FFEBEE; color: var(--error); display: block; }
+  .choice {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 3px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+  .choice.selected { border-color: var(--orange); background: #FFF3E0; }
+  .choice.correct { border-color: var(--success); background: #E8F5E9; }
+  .choice.wrong { border-color: var(--error); background: #FFEBEE; }
+  .mc-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 11px;
+    margin: 4px 0;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .mc-option.selected { border-color: var(--orange); background: #FFF3E0; }
+  .mc-option.correct-ans { border-color: var(--success); background: #E8F5E9; }
+  .mc-option.wrong-ans { border-color: var(--error); background: #FFEBEE; }
+  .word-bank {
+    background: #E8F5E9;
+    padding: 8px;
+    border-radius: 8px;
+    margin: 6px 0;
+    font-weight: 600;
+    line-height: 1.7;
+    font-size: 0.86rem;
+  }
+  .score-box {
+    background: linear-gradient(135deg, #E8F5E9, #FFF3E0);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    margin-top: 16px;
+    display: none;
+    border: 2px solid var(--green-light);
+  }
+  .score-box.visible { display: block; }
+  .score-num { font-size: 2.2rem; font-weight: 800; color: var(--green-dark); }
+  .score-pct { font-size: 1.2rem; color: var(--orange); font-weight: 700; margin: 4px 0 10px; }
+  .breakdown { text-align: left; margin-top: 10px; font-size: 0.9rem; }
+  .breakdown div { padding: 4px 0; border-bottom: 1px solid #C8E6C9; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Focus 1 · Unit 7/1 h/w</h1>
+    <div class="meta">Travel · Holidays and transport · Accommodation</div>
+  </header>
+
+  <!-- EX 1 Transport words -->
+  <div class="section">
+    <h2><span class="badge">1</span> Transport – choose the word</h2>
+    <div class="aim">Choose the correct transport word. (8 points)</div>
+    <div class="hint-ua">🇺🇦 Обери правильне слово.</div>
+    <div id="trItems"></div>
+  </div>
+
+  <!-- EX 2 Holiday types -->
+  <div class="section">
+    <h2><span class="badge">2</span> Types of holiday</h2>
+    <div class="aim">Choose the correct type of holiday. (6 points)</div>
+    <div class="hint-ua">🇺🇦 Обери тип відпочинку.</div>
+    <div id="holItems"></div>
+  </div>
+
+  <!-- EX 3 go on / go by -->
+  <div class="section">
+    <h2><span class="badge">3</span> go on / go by / go on a</h2>
+    <div class="aim">Choose the correct phrase. (5 points)</div>
+    <div class="hint-ua">🇺🇦 Обери правильний вираз.</div>
+    <div id="goItems"></div>
+  </div>
+
+  <!-- EX 4 Book / make / visit -->
+  <div class="section">
+    <h2><span class="badge">4</span> book · make · visit</h2>
+    <div class="aim">Choose the correct word. (8 points)</div>
+    <div class="word-bank">accommodation · arrangements · excursions · flights · holiday · hotels · markets · museums · reservations · seats · sights · tickets · transport</div>
+    <div id="bmvItems"></div>
+  </div>
+
+  <!-- EX 5 Accommodation -->
+  <div class="section">
+    <h2><span class="badge">5</span> Accommodation</h2>
+    <div class="aim">Choose the best word for each gap. (5 points)</div>
+    <div class="hint-ua">🇺🇦 Обери слово для кожного пропуску.</div>
+    <div id="accItems"></div>
+  </div>
+
+  <!-- EX 6 Blog holiday memories -->
+  <div class="section">
+    <h2><span class="badge">6</span> Holiday memories – complete the blog</h2>
+    <div class="aim">Choose the correct word for each gap. (8 points)</div>
+    <div class="word-bank">coach · beach · foot · campsite · rode · sights · walking · flight · seats · accommodation</div>
+    <div id="blogItems"></div>
+  </div>
+
+  <div style="text-align:center;margin:18px 0">
+    <button class="btn btn-primary" style="font-size:1rem;padding:12px 24px" onclick="calculateScore()">Check all & see my score</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div>Your total score</div>
+    <div class="score-num" id="scoreNum">0 / 40</div>
+    <div class="score-pct" id="scorePct">0%</div>
+    <div class="breakdown" id="breakdown"></div>
+    <div id="scoreMsg" style="margin-top:10px;font-weight:600"></div>
+  </div>
+
+  <footer>Focus 1 · Unit 7/1 Homework · Travel</footer>
+</div>
+
+<script>
+const hw = {
+  transport: [
+    { q: "They travel on the road: b___e", options: ["bike", "bus", "boat"], answer: 0 },
+    { q: "They travel on the road: c____h", options: ["coach", "car", "cart"], answer: 0 },
+    { q: "They travel on the road: m________e", options: ["motorbike", "minibus", "metro"], answer: 0 },
+    { q: "They travel on water: f____y", options: ["ferry", "flight", "float"], answer: 0 },
+    { q: "They travel on water: s___p", options: ["ship", "stop", "shop"], answer: 0 },
+    { q: "They travel on tracks: t___n", options: ["train", "tram", "truck"], answer: 0 },
+    { q: "They travel on tracks: t___m", options: ["tram", "train", "taxi"], answer: 0 },
+    { q: "They travel on tracks: u_________d / the T___e", options: ["underground / Tube", "underpass / Train", "upperdeck / Tram"], answer: 0 }
+  ],
+  holiday: [
+    { q: "We helped on the farm and cleaned rooms at the hostel.", options: ["working holiday", "camping holiday", "beach holiday"], answer: 0 },
+    { q: "We slept in a tent by a lake.", options: ["camping holiday", "beach holiday", "adventure holiday"], answer: 0 },
+    { q: "We carried our clothes on our backs and walked from place to place.", options: ["backpacking holiday", "beach holiday", "touring holiday"], answer: 0 },
+    { q: "We stayed in a hotel in Spain and swam in the Mediterranean every day.", options: ["beach holiday", "working holiday", "camping holiday"], answer: 0 },
+    { q: "We travelled on a coach through the Loire Valley looking at castles and palaces with a guide.", options: ["touring holiday", "adventure holiday", "beach holiday"], answer: 0 },
+    { q: "We went swimming, sailing, rock climbing and other things.", options: ["activity holiday", "working holiday", "camping holiday"], answer: 0 }
+  ],
+  go: [
+    { q: "Perfect holiday town. You don’t need transport. ______ foot to all the sights.", options: ["Go on", "Go by", "Go on a"], answer: 0 },
+    { q: "______ six-day tour of Europe and see the sights.", options: ["Go on a", "Go by", "Go on"], answer: 0 },
+    { q: "You ______ coach and you don’t pay for accommodation.", options: ["go by", "go on", "go on a"], answer: 0 },
+    { q: "You can now ______ fast train from the airport to the city centre.", options: ["go by", "go on a", "go on"], answer: 0 },
+    { q: "… or a cheaper option is to ______ bus.", options: ["go by", "go on a", "go on"], answer: 0 }
+  ],
+  bmv: [
+    { q: "Book cheap ______ on our comfortable and safe planes.", options: ["flights", "hotels", "tickets"], answer: 0 },
+    { q: "At yourtrain.iz you can book ______ for trains in the UK and Europe.", options: ["tickets", "seats", "flights"], answer: 0 },
+    { q: "You can also book ______ on trains and coaches.", options: ["seats", "hotels", "sights"], answer: 0 },
+    { q: "Bookahotel.hs is the best place to find cheap ______.", options: ["hotels", "flights", "tickets"], answer: 0 },
+    { q: "From five-star ______ to cheap hostels.", options: ["hotels", "flights", "markets"], answer: 0 },
+    { q: "When you book a ______ with Seymour WithusTravel…", options: ["holiday", "flight", "ticket"], answer: 0 },
+    { q: "We can make ______ in popular local restaurants.", options: ["reservations", "arrangements", "excursions"], answer: 0 },
+    { q: "We can book ______ to see interesting ______.", options: ["excursions / sights", "flights / hotels", "tickets / seats"], answer: 0 }
+  ],
+  acc: [
+    { q: "There are some g______ and b______ places but they are small with only three or four rooms.", options: ["guest houses / B&Bs", "gyms / bars", "gardens / beaches"], answer: 0 },
+    { q: "Another idea is to stay on a c______.", options: ["campsite", "coach", "castle"], answer: 0 },
+    { q: "I think the best place to stay is the local y______.", options: ["youth hostel", "yacht", "yard"], answer: 0 },
+    { q: "There are rooms for four or eight people. It’s a good way to meet interesting people and it’s very ______. ", options: ["cheap", "expensive", "cold"], answer: 0 },
+    { q: "There’s an expensive 4-star ______. It’s got a swimming pool and a nice restaurant.", options: ["hotel", "hostel", "house"], answer: 0 }
+  ],
+  blog: [
+    { q: "When we arrived, we got a ______ from the airport to the ______ where we stayed.", options: ["coach / campsite", "flight / hotel", "bus / beach"], answer: 0 },
+    { q: "The town was a nice size and we went to the beach and the shops on ______.", options: ["foot", "coach", "flight"], answer: 0 },
+    { q: "We ______ around on motorbikes and visited the ______.", options: ["rode / sights", "walked / beach", "sailed / markets"], answer: 0 },
+    { q: "It was a ______ holiday – lying in the sun and swimming in the sea.", options: ["beach", "walking", "camping"], answer: 0 },
+    { q: "The only problem was that there was only one restaurant in the area and we couldn’t ______ a reservation.", options: ["make", "book", "do"], answer: 0 },
+    { q: "On the last day, we ______ a local market and bought some clothes and souvenirs.", options: ["visited", "rode", "sailed"], answer: 0 },
+    { q: "We were worried the next day because we forgot to book ______ for the journey back to the airport.", options: ["seats", "sights", "flights"], answer: 0 },
+    { q: "Sally booked the ______ last week. London to Faro, July 10th!", options: ["flight", "coach", "campsite"], answer: 0 }
+  ]
+};
+
+const results = { tr: 0, hol: 0, go: 0, bmv: 0, acc: 0, blog: 0 };
+
+function init() {
+  build("trItems", hw.transport, "tr");
+  build("holItems", hw.holiday, "hol");
+  build("goItems", hw.go, "go");
+  build("bmvItems", hw.bmv, "bmv");
+  build("accItems", hw.acc, "acc");
+  build("blogItems", hw.blog, "blog");
+}
+
+function build(boxId, data, prefix) {
+  const box = document.getElementById(boxId);
+  data.forEach((item, i) => {
+    let opts = item.options.map((o, oi) =>
+      `<button class="choice" data-ex="${prefix}" data-i="${i}" data-oi="${oi}" onclick="sel(this)">${o}</button>`
+    ).join("");
+    box.innerHTML += `<div style="margin:10px 0;padding:8px;background:#FAFAFA;border-radius:8px">
+      <div><span class="q-num">${i+1}</span>${item.q}</div>
+      <div style="margin-top:6px">${opts}</div>
+      <div class="feedback" id="fb-${prefix}-${i}"></div>
+      <div class="btn-row"><button class="btn btn-outline" onclick="check('${prefix}',${i})">Check</button></div>
+    </div>`;
+  });
+}
+
+function sel(btn) {
+  const i = btn.dataset.i;
+  const ex = btn.dataset.ex;
+  document.querySelectorAll(`.choice[data-ex="${ex}"][data-i="${i}"]`).forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+}
+
+function check(ex, i) {
+  const sel = document.querySelector(`.choice[data-ex="${ex}"][data-i="${i}"].selected`);
+  if (!sel) return;
+  const oi = +sel.dataset.oi;
+  const data = hw[ex === "tr" ? "transport" : ex === "hol" ? "holiday" : ex === "go" ? "go" : ex === "bmv" ? "bmv" : ex === "acc" ? "acc" : "blog"];
+  const fb = document.getElementById("fb-" + ex + "-" + i);
+  if (oi === data[i].answer) {
+    fb.className = "feedback correct";
+    fb.textContent = "✓ Correct!";
+    sel.classList.add("correct");
+  } else {
+    fb.className = "feedback wrong";
+    fb.textContent = "✗ Wrong";
+    sel.classList.add("wrong");
+  }
+}
+
+function count(prefix, total) {
+  let c = 0;
+  for (let i = 0; i < total; i++) {
+    const fb = document.getElementById("fb-" + prefix + "-" + i);
+    if (fb && fb.classList.contains("correct")) c++;
+  }
+  return c;
+}
+
+function calculateScore() {
+  results.tr = count("tr", 8);
+  results.hol = count("hol", 6);
+  results.go = count("go", 5);
+  results.bmv = count("bmv", 8);
+  results.acc = count("acc", 5);
+  results.blog = count("blog", 8);
+
+  const total = results.tr + results.hol + results.go + results.bmv + results.acc + results.blog;
+  const max = 40;
+  const pct = Math.round((total / max) * 100);
+
+  document.getElementById("scoreNum").textContent = `${total} / ${max}`;
+  document.getElementById("scorePct").textContent = `${pct}%`;
+  document.getElementById("breakdown").innerHTML = `
+    <div>1. Transport: <strong>${results.tr}/8</strong></div>
+    <div>2. Types of holiday: <strong>${results.hol}/6</strong></div>
+    <div>3. go on / go by: <strong>${results.go}/5</strong></div>
+    <div>4. book · make · visit: <strong>${results.bmv}/8</strong></div>
+    <div>5. Accommodation: <strong>${results.acc}/5</strong></div>
+    <div>6. Holiday memories: <strong>${results.blog}/8</strong></div>`;
+
+  let msg = "";
+  if (pct >= 90) msg = "Excellent work! 🌟";
+  else if (pct >= 70) msg = "Good job! Check the mistakes.";
+  else if (pct >= 50) msg = "Not bad – revise travel vocabulary.";
+  else msg = "Look at the word lists again and try once more.";
+  document.getElementById("scoreMsg").textContent = msg;
+
+  const box = document.getElementById("scoreBox");
+  box.classList.add("visible");
+  box.scrollIntoView({ behavior: "smooth" });
+}
+
+init();
+</script>
+</body>
+</html>
