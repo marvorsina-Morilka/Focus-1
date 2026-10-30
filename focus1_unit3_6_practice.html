@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus 1 · Unit 3.6 · Describing a photo · Morning routine</title>
+<style>
+:root{--p:#ef6c00;--pd:#e65100;--ok:#2e7d32;--err:#c62828;--bg:#fff8e1;--card:#fff;--bd:#ffcc80;--t:#1a1a2e;--m:#e65100}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--t);line-height:1.55;font-size:16.5px;padding:16px}
+.wrap{max-width:920px;margin:0 auto}
+header{background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;padding:22px 24px;border-radius:14px;margin-bottom:20px;box-shadow:0 6px 18px rgba(239,108,0,.3)}
+header h1{font-size:1.25rem;margin-bottom:4px}
+header p{opacity:.93;font-size:.92rem}
+.badge{display:inline-block;background:rgba(255,255,255,.22);padding:3px 11px;border-radius:16px;font-size:.8rem;margin-bottom:8px}
+.ex{background:var(--card);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.06);border:1px solid var(--bd)}
+.ex h2{color:var(--pd);font-size:1.08rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.ex h2 .n{background:var(--p);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.inst{color:var(--m);font-size:.9rem;margin-bottom:12px}
+.wb{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.wt{background:#fff3e0;color:var(--pd);padding:4px 10px;border-radius:16px;font-size:.82rem;font-weight:500;border:1px solid #ffcc80}
+.s{margin-bottom:11px;line-height:1.7}
+select{font-family:inherit;font-size:.88rem;padding:5px 8px;border:2px solid var(--bd);border-radius:8px;background:#fff;min-width:160px}
+select:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(239,108,0,.12)}
+select.ok{border-color:var(--ok);background:#e8f5e9}
+select.bad{border-color:var(--err);background:#ffebee}
+.btn-r{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+button{font-family:inherit;font-size:.92rem;font-weight:600;padding:9px 18px;border:none;border-radius:10px;cursor:pointer}
+.bc{background:var(--p);color:#fff;box-shadow:0 3px 10px rgba(239,108,0,.25)}.bc:hover{background:var(--pd)}
+.br{background:#ffe0b2;color:var(--m)}.br:hover{background:#ffcc80}
+.bt{background:linear-gradient(135deg,#2e7d32,#1b5e20);color:#fff;font-size:1.02rem;padding:13px 26px;box-shadow:0 4px 14px rgba(46,125,50,.3)}
+.fb{margin-top:12px;padding:11px 14px;border-radius:10px;font-weight:500;display:none}
+.fb.show{display:block}
+.fb.ok{background:#e8f5e9;color:var(--ok);border:1px solid #a5d6a7}
+.fb.bad{background:#ffebee;color:var(--err);border:1px solid #ef9a9a}
+.sc{font-size:1.08rem;font-weight:700}
+.tot{background:var(--card);border-radius:14px;padding:28px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.06);border:2px solid var(--p);text-align:center}
+.tot h2{font-size:1.2rem;color:var(--pd);margin-bottom:6px}
+.tot .h{color:var(--m);font-size:.9rem;margin-bottom:16px}
+.td{display:none;margin-top:16px;padding:20px;border-radius:12px;font-size:1.1rem}
+.td.show{display:block}
+.td.good{background:#e8f5e9;border:2px solid #a5d6a7;color:var(--ok)}
+.td.mid{background:#fff8e1;border:2px solid #ffe082;color:#f57f17}
+.td.bad{background:#ffebee;border:2px solid #ef9a9a;color:var(--err)}
+.big{font-size:2.2rem;font-weight:800;margin:6px 0 2px}
+.bd{margin-top:14px;font-size:.92rem;text-align:left;max-width:480px;margin-left:auto;margin-right:auto}
+.bd div{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed rgba(0,0,0,.1)}
+.info{background:#f5f5f5;border-radius:10px;padding:12px;margin:10px 0;font-size:.9rem;border:1px solid #ddd}
+.photo-card{background:linear-gradient(145deg,#fff,#fafafa);border:2px solid var(--bd);border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.photo-card h3{color:var(--pd);margin-bottom:8px;font-size:1.05rem}
+.photo-visual{background:#f0f0f0;border-radius:12px;padding:20px;text-align:center;margin-bottom:12px;border:1px dashed #ccc}
+.photo-visual .scene{font-size:.95rem;line-height:1.6;color:#333;text-align:left;max-width:520px;margin:0 auto}
+.starters{background:#fff3e0;border-left:4px solid var(--p);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.9rem}
+.starters p{margin:4px 0}
+footer{text-align:center;color:var(--m);font-size:.82rem;padding:8px 0 24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="badge">Focus 1 · Unit 3.6 · Practice</div>
+  <h1>Describing a photo · Morning routine</h1>
+  <p>Family getting ready · useful words &amp; phrases</p>
+</header>
+
+<!-- PHOTO -->
+<div class="ex">
+  <h2><span class="n">📷</span> The picture</h2>
+  <div class="photo-card">
+    <h3>Morning at home</h3>
+    <div class="photo-visual">
+      <div class="scene">
+        <strong>Left (kitchen):</strong> A woman in a green dress is cooking breakfast. On the table — fruit, juice, cereal, milk, toast.<br><br>
+        <strong>Centre:</strong> A man in a blue shirt is ironing clothes and checking his watch. There is a clock on the wall (about 7:10).<br><br>
+        <strong>Right (bedroom):</strong> A girl in pink pyjamas is making the bed / brushing her teeth area.<br><br>
+        <strong>Front:</strong> A boy in a school uniform is tying his shoelaces. Next to him — a schoolbag with books.
+      </div>
+    </div>
+    <div class="wb">
+      <span class="wt">wake up</span><span class="wt">get ready</span><span class="wt">brush one’s teeth</span>
+      <span class="wt">make the bed</span><span class="wt">prepare breakfast</span><span class="wt">pack the schoolbag</span>
+      <span class="wt">iron clothes</span><span class="wt">check the time</span><span class="wt">get dressed</span>
+      <span class="wt">hurry up</span><span class="wt">eat breakfast</span><span class="wt">wear a school uniform</span>
+      <span class="wt">leave for school</span><span class="wt">morning routine</span><span class="wt">in a hurry</span>
+      <span class="wt">help each other</span><span class="wt">start the day</span><span class="wt">go to work</span>
+    </div>
+    <div class="starters">
+      <strong>Sentence starters (Speaking Bank):</strong>
+      <p>• The photo shows …</p>
+      <p>• In the photo there is / are …</p>
+      <p>• On the left / On the right / In the centre …</p>
+      <p>• In the background we can see …</p>
+      <p>• He / She is … + -ing</p>
+      <p>• He’s / She’s wearing …</p>
+      <p>• Perhaps / Maybe …</p>
+      <p>• I think …</p>
+    </div>
+  </div>
+</div>
+
+<!-- EX 1 Who is doing what -->
+<div class="ex" id="ex1">
+  <h2><span class="n">1</span> Who is doing what?</h2>
+  <p class="inst">Оберіть правильну відповідь за фото. <strong>(8 балів)</strong></p>
+  <div class="s">1. The woman is
+    <select id="a1"><option value="">—</option><option value="preparing breakfast">preparing breakfast</option><option value="ironing clothes">ironing clothes</option><option value="making the bed">making the bed</option><option value="tying her shoes">tying her shoes</option></select>.
+  </div>
+  <div class="s">2. The man is
+    <select id="a2"><option value="">—</option><option value="ironing clothes and checking the time">ironing clothes and checking the time</option><option value="cooking">cooking</option><option value="packing the schoolbag">packing the schoolbag</option><option value="brushing his teeth">brushing his teeth</option></select>.
+  </div>
+  <div class="s">3. The girl is
+    <select id="a3"><option value="">—</option><option value="making the bed / getting ready in the bedroom">making the bed / getting ready in the bedroom</option><option value="eating breakfast">eating breakfast</option><option value="going to work">going to work</option><option value="ironing">ironing</option></select>.
+  </div>
+  <div class="s">4. The boy is
+    <select id="a4"><option value="">—</option><option value="tying his shoelaces / getting ready for school">tying his shoelaces / getting ready for school</option><option value="cooking">cooking</option><option value="watching TV">watching TV</option><option value="sleeping">sleeping</option></select>.
+  </div>
+  <div class="s">5. The boy is wearing
+    <select id="a5"><option value="">—</option><option value="a school uniform">a school uniform</option><option value="pyjamas">pyjamas</option><option value="a green dress">a green dress</option><option value="a blue shirt only">a blue shirt only</option></select>.
+  </div>
+  <div class="s">6. On the table we can see
+    <select id="a6"><option value="">—</option><option value="fruit, juice, cereal and toast">fruit, juice, cereal and toast</option><option value="only books">only books</option><option value="clothes">clothes</option><option value="a computer">a computer</option></select>.
+  </div>
+  <div class="s">7. Next to the boy there is
+    <select id="a7"><option value="">—</option><option value="a schoolbag">a schoolbag</option><option value="an iron">an iron</option><option value="a frying pan">a frying pan</option><option value="a clock">a clock</option></select>.
+  </div>
+  <div class="s">8. The family is
+    <select id="a8"><option value="">—</option><option value="in a hurry / starting the day">in a hurry / starting the day</option><option value="relaxing in the evening">relaxing in the evening</option><option value="having a party">having a party</option><option value="sleeping">sleeping</option></select>.
+  </div>
+  <div class="btn-r">
+    <button class="bc" onclick="chk('a',Ans.a,8,'f1','e1')">Перевірити</button>
+    <button class="br" onclick="rst('a',[1,2,3,4,5,6,7,8],'f1','e1')">Скинути</button>
+  </div>
+  <div class="fb" id="f1"></div>
+</div>
+
+<!-- EX 2 Useful phrases -->
+<div class="ex" id="ex2">
+  <h2><span class="n">2</span> Useful words &amp; phrases</h2>
+  <p class="inst">Оберіть правильну фразу. <strong>(8 балів)</strong></p>
+  <div class="s">1. The woman is
+    <select id="b1"><option value="">—</option><option value="preparing breakfast">preparing breakfast</option><option value="packing the schoolbag">packing the schoolbag</option><option value="checking the time">checking the time</option></select>.
+  </div>
+  <div class="s">2. The man is
+    <select id="b2"><option value="">—</option><option value="ironing clothes">ironing clothes</option><option value="making the bed">making the bed</option><option value="brushing his teeth">brushing his teeth</option></select>.
+  </div>
+  <div class="s">3. He is also
+    <select id="b3"><option value="">—</option><option value="checking the time">checking the time</option><option value="eating breakfast">eating breakfast</option><option value="leaving for school">leaving for school</option></select>.
+  </div>
+  <div class="s">4. The boy is
+    <select id="b4"><option value="">—</option><option value="getting dressed / getting ready">getting dressed / getting ready</option><option value="going to work">going to work</option><option value="preparing breakfast">preparing breakfast</option></select>.
+  </div>
+  <div class="s">5. He is going to
+    <select id="b5"><option value="">—</option><option value="leave for school">leave for school</option><option value="go to work">go to work</option><option value="make the bed">make the bed</option></select>.
+  </div>
+  <div class="s">6. The girl is probably
+    <select id="b6"><option value="">—</option><option value="making the bed">making the bed</option><option value="ironing clothes">ironing clothes</option><option value="packing the schoolbag">packing the schoolbag</option></select>.
+  </div>
+  <div class="s">7. This picture shows a typical
+    <select id="b7"><option value="">—</option><option value="morning routine">morning routine</option><option value="evening party">evening party</option><option value="weekend trip">weekend trip</option></select>.
+  </div>
+  <div class="s">8. Everyone looks
+    <select id="b8"><option value="">—</option><option value="in a hurry">in a hurry</option><option value="very bored">very bored</option><option value="asleep">asleep</option></select>.
+  </div>
+  <div class="btn-r">
+    <button class="bc" onclick="chk('b',Ans.b,8,'f2','e2')">Перевірити</button>
+    <button class="br" onclick="rst('b',[1,2,3,4,5,6,7,8],'f2','e2')">Скинути</button>
+  </div>
+  <div class="fb" id="f2"></div>
+</div>
+
+<!-- EX 3 Complete the description -->
+<div class="ex" id="ex3">
+  <h2><span class="n">3</span> Complete the description</h2>
+  <p class="inst">Оберіть правильні слова / фрази. <strong>(8 балів)</strong></p>
+  <div class="s">1. The photo shows a family
+    <select id="c1"><option value="">—</option><option value="in the morning">in the morning</option><option value="in the evening">in the evening</option><option value="at night">at night</option></select>.
+  </div>
+  <div class="s">2. On the left the mother is
+    <select id="c2"><option value="">—</option><option value="preparing breakfast">preparing breakfast</option><option value="watching TV">watching TV</option><option value="sleeping">sleeping</option></select>.
+  </div>
+  <div class="s">3. In the centre the father is
+    <select id="c3"><option value="">—</option><option value="ironing clothes">ironing clothes</option><option value="playing football">playing football</option><option value="reading a book">reading a book</option></select>
+    and looking at his watch.
+  </div>
+  <div class="s">4. On the right the girl is
+    <select id="c4"><option value="">—</option><option value="in the bedroom">in the bedroom</option><option value="in the garden">in the garden</option><option value="in the car">in the car</option></select>.
+  </div>
+  <div class="s">5. The boy is
+    <select id="c5"><option value="">—</option><option value="wearing a school uniform">wearing a school uniform</option><option value="wearing pyjamas">wearing pyjamas</option><option value="wearing a coat">wearing a coat</option></select>.
+  </div>
+  <div class="s">6. He is
+    <select id="c6"><option value="">—</option><option value="getting ready for school">getting ready for school</option><option value="going to bed">going to bed</option><option value="watching a film">watching a film</option></select>.
+  </div>
+  <div class="s">7. Perhaps they are all
+    <select id="c7"><option value="">—</option><option value="in a hurry">in a hurry</option><option value="very relaxed">very relaxed</option><option value="on holiday">on holiday</option></select>.
+  </div>
+  <div class="s">8. I think this is a typical
+    <select id="c8"><option value="">—</option><option value="morning routine">morning routine</option><option value="birthday party">birthday party</option><option value="sports lesson">sports lesson</option></select>.
+  </div>
+  <div class="btn-r">
+    <button class="bc" onclick="chk('c',Ans.c,8,'f3','e3')">Перевірити</button>
+    <button class="br" onclick="rst('c',[1,2,3,4,5,6,7,8],'f3','e3')">Скинути</button>
+  </div>
+  <div class="fb" id="f3"></div>
+</div>
+
+<!-- EX 4 Speaking -->
+<div class="ex" id="ex4">
+  <h2><span class="n">4</span> Speaking practice</h2>
+  <p class="inst">Опишіть фото усно (2–3 хвилини). Використайте фрази нижче. Бали не нараховуються.</p>
+  <div class="starters">
+    <p>1. The photo shows …</p>
+    <p>2. In the photo there is / are …</p>
+    <p>3. On the left … is …</p>
+    <p>4. In the centre … is …</p>
+    <p>5. On the right … is …</p>
+    <p>6. The boy is wearing … and he is …</p>
+    <p>7. We can also see …</p>
+    <p>8. Perhaps / Maybe …</p>
+    <p>9. I think they are … because …</p>
+  </div>
+  <div class="info">
+    <strong>Try to use:</strong> prepare breakfast · iron clothes · check the time · make the bed · get ready · wear a school uniform · pack the schoolbag · in a hurry · morning routine · leave for school · go to work
+  </div>
+</div>
+
+<!-- TOTAL -->
+<div class="tot">
+  <h2>📝 Підсумок</h2>
+  <p class="h">Спочатку перевірте вправи 1–3, потім натисніть кнопку.</p>
+  <button class="bt" onclick="total()">Порахувати загальний бал</button>
+  <div class="td" id="td"></div>
+</div>
+
+<footer>Focus 1 · Unit 3.6 · Describing a photo · Morning routine<br>Максимум: <strong>24 бали</strong> (+ speaking)</footer>
+</div>
+
+<script>
+const Ans = {
+  a:{1:'preparing breakfast',2:'ironing clothes and checking the time',3:'making the bed / getting ready in the bedroom',4:'tying his shoelaces / getting ready for school',5:'a school uniform',6:'fruit, juice, cereal and toast',7:'a schoolbag',8:'in a hurry / starting the day'},
+  b:{1:'preparing breakfast',2:'ironing clothes',3:'checking the time',4:'getting dressed / getting ready',5:'leave for school',6:'making the bed',7:'morning routine',8:'in a hurry'},
+  c:{1:'in the morning',2:'preparing breakfast',3:'ironing clothes',4:'in the bedroom',5:'wearing a school uniform',6:'getting ready for school',7:'in a hurry',8:'morning routine'}
+};
+const S = {e1:null,e2:null,e3:null};
+
+function chk(pre,ans,tot,fid,key){
+  let c=0;
+  for(const[k,v] of Object.entries(ans)){
+    const el=document.getElementById(pre+k);
+    if(!el) continue;
+    el.classList.remove('ok','bad');
+    if(el.value===v){el.classList.add('ok');c++;}
+    else if(el.value) el.classList.add('bad');
+  }
+  S[key]={c,t:tot};
+  const fb=document.getElementById(fid);
+  fb.classList.add('show');
+  if(c===tot){fb.className='fb show ok';fb.innerHTML='✅ Чудово! '+c+' / '+tot;}
+  else{fb.className='fb show bad';fb.innerHTML='Результат: <span class="sc">'+c+' / '+tot+'</span>. Перевірте червоні поля.';}
+}
+function rst(pre,keys,fid,key){
+  keys.forEach(k=>{const el=document.getElementById(pre+k);if(el){el.value='';el.classList.remove('ok','bad');}});
+  document.getElementById(fid).className='fb';S[key]=null;
+  document.getElementById('td').className='td';document.getElementById('td').innerHTML='';
+}
+function total(){
+  if(!S.e1) chk('a',Ans.a,8,'f1','e1');
+  if(!S.e2) chk('b',Ans.b,8,'f2','e2');
+  if(!S.e3) chk('c',Ans.c,8,'f3','e3');
+  const s1=S.e1.c,s2=S.e2.c,s3=S.e3.c;
+  const tot=s1+s2+s3, max=24, pct=Math.round(tot/max*100);
+  const box=document.getElementById('td');
+  let cls,msg;
+  if(pct>=80){cls='good';msg='Відмінно! 🎉';}
+  else if(pct>=50){cls='mid';msg='Добре, повторіть morning routine phrases.';}
+  else{cls='bad';msg='Потрібно ще потренувати describing a photo.';}
+  box.className='td show '+cls;
+  box.innerHTML='<div>'+msg+'</div><div class="big">'+tot+' / '+max+'</div><div>'+pct+'%</div><div class="bd"><div><span>1. Who is doing what?</span><span>'+s1+' / 8</span></div><div><span>2. Useful words &amp; phrases</span><span>'+s2+' / 8</span></div><div><span>3. Complete the description</span><span>'+s3+' / 8</span></div><div><span>4. Speaking practice</span><span>— (oral)</span></div></div>';
+}
+</script>
+</body>
+</html>
